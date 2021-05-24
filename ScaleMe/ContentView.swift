@@ -8,9 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var currentScale: CGFloat = 0
+    @State var finalScale: CGFloat = 1
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            VStack {
+                Text("Click To Zoom in/out")
+                    .bold()
+                    .font(.system(size: 32))
+                    .padding()
+                    .background(Color.pink)
+                    .scaleEffect(finalScale + currentScale)
+                    .gesture(MagnificationGesture().onChanged {
+                        
+                        newScale in currentScale = newScale
+                    }.onEnded {
+                        scale in
+                        finalScale = scale
+                        currentScale = 0
+                    }
+                )
+            }
+            .navigationTitle("Magnification Gesture")
+        }
     }
 }
 
